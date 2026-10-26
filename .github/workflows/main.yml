@@ -14,10 +14,11 @@ jobs:
           java-version: '17'
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.1'
+          flutter-version: '3.38.4'
           channel: 'stable'
       - name: Build APK
         run: |
+          sed -i 's/gradle-8.10.2-all.zip/gradle-8.14-all.zip/g' android/gradle/wrapper/gradle-wrapper.properties || true
           flutter pub get
           flutter pub global activate intl_utils
           flutter pub global run intl_utils:generate || true
