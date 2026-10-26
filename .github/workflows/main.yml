@@ -19,6 +19,8 @@ jobs:
       - name: Build APK
         run: |
           sed -i 's/gradle-8.10.2-all.zip/gradle-8.14-all.zip/g' android/gradle/wrapper/gradle-wrapper.properties || true
+          keytool -genkey -v -keystore android/app/upload-keystore.jks -storepass android -alias upload -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android, OU=Android, O=Android, L=Android, S=Android, C=US"
+          printf "storePassword=android\nkeyPassword=android\nkeyAlias=upload\nstoreFile=upload-keystore.jks\n" > android/keystore.properties
           flutter pub get
           flutter pub global activate intl_utils
           flutter pub global run intl_utils:generate || true
